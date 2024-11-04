@@ -1,0 +1,23 @@
+# COMMON PATHS
+$ErrorActionPreference = "Stop"                                     # stop when error occur 
+$hereFolder = (Get-Item -Path "./" -Verbose).FullName
+$dotnetFolder =  Join-Path -Path $hereFolder -ChildPath "aspnet-core/src/AITS.ERP.Web.Host"
+$ngFolder = Join-Path -Path $hereFolder -ChildPath "angular/src/assets" 
+$webUrl = "http://10.1.28.56:4200"             # default is http://10.1.28.56:4200, change it 
+$webAPIUrl = "http://10.1.28.56:80"      # default is http://10.1.28.56:80, change it 
+
+
+echo $dotnetFolder
+echo $ngFolder
+
+$ngConfigPath = Join-Path $ngFolder "appconfig.production.json"
+$dotnetConfigPath = Join-Path $dotnetFolder "appsettings.Production.json"
+echo $ngConfigPath
+echo $dotnetConfigPath
+# # Change server to deploy application
+
+(Get-Content $ngConfigPath).Replace( "http://localhost:44301", $webAPIUrl) | Set-Content $ngConfigPath
+(Get-Content $ngConfigPath).Replace( "http://localhost:4200", $webUrl) | Set-Content $ngConfigPath
+
+# # change the api to point to the frontend 
+(Get-Content $dotnetConfigPath).Replace( "http://localhost:4200", $webUrl) | Set-Content $dotnetConfigPath
