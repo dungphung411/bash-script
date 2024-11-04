@@ -21,3 +21,30 @@ echo $dotnetConfigPath
 
 # # change the api to point to the frontend 
 (Get-Content $dotnetConfigPath).Replace( "http://localhost:4200", $webUrl) | Set-Content $dotnetConfigPath
+
+
+
+#!/bin/bash
+
+# COMMON PATHS
+set -e  # Equivalent to ErrorActionPreference = Stop
+hereFolder=$(pwd)
+dotnetFolder="${hereFolder}/aspnet-core/src/AITS.ERP.Web.Host"
+ngFolder="${hereFolder}/angular/src/assets"
+webUrl="http://10.1.28.56:4200"  # Default is http://10.1.28.56:4200, change it
+webAPIUrl="http://10.1.28.56:80"  # Default is http://10.1.28.56:80, change it
+
+echo $dotnetFolder
+echo $ngFolder
+
+ngConfigPath="${ngFolder}/appconfig.production.json"
+dotnetConfigPath="${dotnetFolder}/appsettings.Production.json"
+echo $ngConfigPath
+echo $dotnetConfigPath
+
+# Change server to deploy application
+sed -i "s|http://localhost:44301|$webAPIUrl|g" "$ngConfigPath"
+sed -i "s|http://localhost:4200|$webUrl|g" "$ngConfigPath"
+
+# Change the API to point to the frontend
+sed -i "s|http://localhost:4200|$webUrl|g" "$dotnetConfigPath"
