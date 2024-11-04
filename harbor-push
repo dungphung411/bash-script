@@ -1,0 +1,4 @@
+docker login harbor.aits.vn:5000
+docker pull quay.io/prometheus/node-exporter
+docker tag quay.io/prometheus/node-exporter:latest harbor.aits.vn:5000/projects/15/repositories/node-exporter:latest
+docker push harbor.aits.vn:5000/projects/15/repositories/node-exporter:latest
