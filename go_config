@@ -1,0 +1,32 @@
+server:
+  port: 9999
+  # host: 0.0.0.0
+  host: 10.1.28.28
+  mode: release
+
+database:
+  driver: godror
+  # host: production.db.host
+  # port: 1521
+  # service_name: MOBIPROD
+  # username: FIMS_PROD
+  # password: ${DB_PASSWORD}  # Use environment variable for sensitive data
+  # connection_string: "${DB_USER}/${DB_PASSWORD}@${DB_HOST}:1521/${DB_SERVICE}"
+  connection_string: "user=FIMS password=fimsmodev connectString=10.1.8.134:1521/MOBIDEV"
+api:
+  # secret_key:Scd3zh1a1234567890qwertyuiop ${API_SECRET_KEY}  # Use environment variable
+  secret_key: Scd3zh1a1234567890qwertyuiop
+  version: v1
+  base_path: /api/v1/fims
+
+swagger:
+  enabled: false
+  title: FIMSAPI
+  description: FIMS Production API Server
+  version: 1.0
+  host: api.fims.com.vn
+
+logging:
+  level: info
+  file: /var/log/fimsapi/app.log
+  format: json
